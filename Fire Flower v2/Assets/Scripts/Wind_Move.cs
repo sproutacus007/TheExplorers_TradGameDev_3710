@@ -15,7 +15,9 @@ public class Wind_Move : MonoBehaviour {
     public float timeToMid = 3f;
     public float timeToHigh = 5f;
     public float sizeBeforeGrow = 3f;
+    public float rotationSpeed = 3f;
     public Vector3 growthFactors = new Vector3(.2f, .2f, .2f);
+    
 
 
     private float windCounter = 0f;
@@ -30,8 +32,8 @@ public class Wind_Move : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        float rotateY = Input.GetAxis("Horizontal");
+        float directionZ = Input.GetAxis("Vertical");
         float moveY = 0f;
         float windSpeed = lowWind;
 
@@ -58,9 +60,16 @@ public class Wind_Move : MonoBehaviour {
             windSpeed = highWind;
         }
 
+        // Rotation
+        Vector3 rotation = new Vector3(0f, rotateY*rotationSpeed, 0f);
+        sparkRigid.transform.Rotate(rotation);
 
-        Vector3 movement = new Vector3(moveX, moveY, moveZ);
-        sparkRigid.AddForce(movement * windSpeed, ForceMode.Acceleration);
+        //Movement
+        Vector3 movementY = new Vector3(0f, moveY, 0f);
+        Vector3 movementF = sparkRigid.transform.forward * directionZ;
+        Vector3 allMove = movementF + movementY;
+        
+        sparkRigid.AddForce(allMove*windSpeed, ForceMode.Acceleration);
 
         var v = sparkRigid.velocity;
         if (sparkRigid.velocity.magnitude > maxSpeed)
@@ -71,6 +80,8 @@ public class Wind_Move : MonoBehaviour {
         {
             sparkRigid.AddForce(0f, -extraGravity, 0f);
         }
+
+        
 
         if (windSpeed == highWind && sparkSize.localScale.x < sizeBeforeGrow)
         {

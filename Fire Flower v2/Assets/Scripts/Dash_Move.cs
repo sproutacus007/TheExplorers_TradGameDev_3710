@@ -5,7 +5,6 @@ using System;
 
 public class Dash_Move : MonoBehaviour {
 
-    public float extraGravity = 10f;
     public float dashSpeed = 50f;
     public float maxSpeed = 50f;
     public float maxHeight = 20f;
