@@ -35,7 +35,7 @@ public class Dash_Move : MonoBehaviour {
 
             //spark trail to leave behind will have a mass equal to sparkSize.localScale / 8
 
-            sparkSize.localScale -= sparkSize.localScale / 8; //shrinks the spark size because of dash
+            player.transform.localScale -= player.transform.localScale / 8; //shrinks the spark size because of dash
         }
 	}
 }

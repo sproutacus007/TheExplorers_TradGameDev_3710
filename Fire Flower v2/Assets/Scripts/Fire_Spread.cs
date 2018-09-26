@@ -6,9 +6,10 @@ using System;
 public class Fire_Spread : MonoBehaviour {
 
     public float timeToIgnite = 1f;
-    public Vector3 growFactor = new Vector3(.5f, .5f, .5f);
+    public Vector3 growFactor = new Vector3(2f, 2f, 2f);
     public GameObject fireState;
     public float mass;
+    public float maxSize = 16f;
 
     private float igniteCounter = 0f;
     private bool onFire = false;
@@ -39,7 +40,7 @@ public class Fire_Spread : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (colliding && onFire && fire.transform.localScale.magnitude <= this.transform.localScale.magnitude/2)
+        if (colliding && onFire && fire.transform.localScale.magnitude <= maxSize)
             fire.transform.localScale += growFactor * Time.deltaTime;
     }
 
