@@ -41,11 +41,11 @@ public class MouseOrbitCamera : MonoBehaviour
     {
         if (target)
         {
-            x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
-            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            x += Input.GetAxis("Mouse X") * xSpeed * distance * Time.deltaTime;
+            y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);
-
+            Quaternion rotationX = Quaternion.Euler(0, x, 0);
             Quaternion rotation = Quaternion.Euler(y, x, 0);
 
             distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
@@ -59,6 +59,9 @@ public class MouseOrbitCamera : MonoBehaviour
             Vector3 position = rotation * negDistance + target.position;
 
             transform.rotation = rotation;
+
+            target.transform.rotation = rotationX;
+
             transform.position = position;
         }
     }

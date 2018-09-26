@@ -2,38 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class Fire_Size : MonoBehaviour {
 
     public float timeToGrow = 1f;
-    public Vector3 growthFactors = new Vector3(.2f, .2f, .2f);
+    public Vector3 shrinkFactors = new Vector3(.05f, .05f, .05f);
+    public GameObject fireAura;
+    public UnityEvent playerDeathEvent;
     private float growCounter = 0f;
-    private Rigidbody sparkRB;
-    private Transform sparkSize;
+    private Transform auraSize;
+    private Transform auraOriginalSize;
 
-	// Use this for initialization
-	void Start () {
-        sparkRB = this.GetComponent<Rigidbody>();
-        sparkSize = this.transform;
-	}
+    // Use this for initialization
+    void Start () {
+        auraSize = fireAura.transform;
+        auraOriginalSize = fireAura.transform;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (growCounter >= timeToGrow)
+        if (auraSize.transform.lossyScale.magnitude < 0.01)
+            playerDeathEvent.Invoke();
+        else
         {
-            sparkSize.localScale += growthFactors*Time.deltaTime;
+            auraSize.localScale -= shrinkFactors * Time.deltaTime;
         }
+        
+    }
+        
 
 	}
 
-    void OnCollisionStay(Collision coll)
-    {
-        growCounter = Math.Min(2, growCounter + Time.deltaTime);
-        
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        growCounter = 0f;
-    }
-}

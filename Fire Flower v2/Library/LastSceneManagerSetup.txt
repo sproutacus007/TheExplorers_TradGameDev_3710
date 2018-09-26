@@ -1,0 +1,5 @@
+sceneSetups:
+- path: D:/OneDrive/OneDrive Documents/4 College Senior 2018-2019/Fall/Traditional
+    Game Dev/In-Class Prototype/In-Class Prototype/Assets/Platformer.unity
+  isLoaded: 1
+  isActive: 1
